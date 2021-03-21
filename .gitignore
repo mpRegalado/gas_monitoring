@@ -3,3 +3,8 @@ Arduino-Data Collection/sensor_gas_natural.ino.bin
 Arduino-Data Collection/sensor_gas_natural.ino.eep
 Arduino-Data Collection/sensor_gas_natural.ino.elf
 Arduino-Data Collection/sensor_gas_natural.ino.hex
+
+
+Python/
+Raspberry-Data Reception/raspi_lora
+Raspberry-Data Reception/raspi_lora-0.2.dist-info

@@ -59,3 +59,37 @@ You can also display readings locally with the use of LEDs connected to differen
 Keep in mind the documentation of the Dragino board when you decide which pins to use.
 
 Once you have set the variables in your code, you can flash it onto your Arduino Mega.
+
+## Data reception
+
+### Hardware Used
+- Raspberry Pi Zero W
+- [Raspberry Pi Zero LoRa shield](https://store.uputronics.com/index.php?route=product/product&product_id=99)
+
+### Dependencies
+You should have a flashed card with any OS that supports the use of Python3 and install the flollowing dependencies:
+- [RPi.GPIO](https://pypi.org/project/RPi.GPIO/)
+- [raspi-lora](https://github.com/mpRegalado/raspi-lora)
+- colorama
+- requests
+- json
+- datetime
+- enum
+
+### Usage
+The receptor will convert the incoming LoRa datagrams to JSON objects with the following structure
+```JSON
+{
+    'session_id': session_id,
+    'count': count,
+    'gas_reading': gas_received,
+    'latitude': latitude,
+    'longitude': longitude,
+    'date_time': date_time
+}
+```
+These objects will be saved locally in files named after the date and sent, by default, to a localhost server.
+Configure the API endpoints by including them in the array at line 66
+```python
+post_urls=['http://localhost:8000/sessions/post/']
+```
