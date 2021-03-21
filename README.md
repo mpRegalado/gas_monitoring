@@ -93,3 +93,25 @@ Configure the API endpoints by including them in the array at line 66
 ```python
 post_urls=['http://localhost:8000/sessions/post/']
 ```
+
+## Web App
+
+This app is built using the [Django Framework](https://www.djangoproject.com/) and must be run in a server capable of running Python and with the django dependency installed.
+
+It opens an endpoint at the url `/sessions/post` that will include POST requests with JSON objects as described above into the local database.
+
+### Combining the web app and the Data reception
+If you wish to run the django server locally in the same raspberry pi zero that recieves the data, you may uncomment line 35 at `Web Application/gasmon/gasmon/settings.py`
+```python
+INSTALLED_APPS = [
+    'readings.apps.ReadingsConfig',
+    #'radio.apps.RadioConfig',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
+```
+Keep in mind that in doing so you will also need to use the same hardware and dependencies described in the Data Reception section, besides Django

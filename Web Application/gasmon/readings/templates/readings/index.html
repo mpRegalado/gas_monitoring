@@ -1,0 +1,28 @@
+{% extends "readings/base.html" %}
+
+{% block body %}
+  {% if page_obj %}
+  <div class="container">
+    <ul class="list-group">
+      {% for session in page_obj %}
+        <li class="list-group-item"><a href="{% url 'readings:detail' session.pk %}">{{ session.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% else %}
+    <p> No sessions on record </p>
+  {% endif %}
+  <nav aria-label="Page Navigation">
+    <ul class="pagination justify-content-center my-4">
+      {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">&laquo; Primera</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previoius_page_number }}">Anterior</a></li>
+      {% endif %}
+      <li class="page-item disabled active"><a class="page-link" href="#"> {{page_obj.number}}/{{page_obj.paginator.num_pages}}</a></li>
+      {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endblock body %}

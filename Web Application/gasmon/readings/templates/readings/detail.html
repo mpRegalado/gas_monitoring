@@ -1,0 +1,69 @@
+{% extends "readings/base.html" %}
+
+{% block navmenu %}
+  <ul class="navbar-nav navbar-expand-sm mr-auto">
+    <li class="nav-item mx-2">
+      <a class="nav-link" href="{% url 'index' %}">Session Index</a>
+    </li>
+    <li class="nav-item mx-2">
+      <a class="nav-link" href="{% url 'readings:download' session.pk %}">Download</a>
+    </li>
+  </ul>
+{% endblock %}
+
+{% block body %}
+  <h1> {{session.name}} </h1>
+  {% if session.measurement_set.all|length != 0  %}
+    {% load l10n %}
+    <div id="map"></div>
+
+    {%if session.is_fixed %}
+    <script>
+      var map = null;
+      function initMap() {
+        var start_pos = {lat: {{session.get_first_fix.latitude|unlocalize}}, lng: {{session.get_first_fix.longitude|unlocalize}}};
+        map = new google.maps.Map(document.getElementById('map'), {
+          center : start_pos,
+          zoom: 10
+        });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBr8Q6Sj1VhTWqzOYeq0ipbbma3NC88eNs&callback=initMap">
+    </script>
+    {% else %}
+    <p>No GPS data yet</p>
+    {% endif %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Valor medio</th>
+          <th scope="col">Valor máximo</th>
+          <th scope="col">Latitud de Valor Máximo</th>
+          <th scope="col">Longitud de Valor Máximo</th>
+          <th scope="col">Time</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for measurement in session.measurement_set.all reversed %}
+      {% if measurement.is_fixed %}
+      <script>
+      new google.maps.Marker({position:
+         {lat: {{measurement.latitude|unlocalize}}, lng: {{measurement.longitude|unlocalize}}},
+          map: map});
+      </script>
+      {% endif %}
+      <tr>
+        <td>{{ measurement.gas_avg }}</td>
+        <td>{{ measurement.gas_high }}</td>
+        <td>{{ measurement.latitude }}</td>
+        <td>{{ measurement.longitude }}</td>
+        <td>{{ measurement.get_formated_date_time }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+
+    </table>
+  {% else %}
+    <p> No measurements taken </p>
+  {% endif %}
+{% endblock body %}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title|default:"Gas Monitor"}}</title>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href= "{% static 'readings/style.css' %}">
+  <link rel="stylesheet" type="text/css" href= "{% static 'readings/css/bootstrap.min.css' %}">
+  <script src="{% static 'readings/js/bootstrap.min.js' %}"></script>
+
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{% url 'index' %}">Gas monitor</a>
+        </div>
+        {% block navmenu %}
+        {% endblock %}
+      </div>
+    </nav>
+
+  </header>
+  <main>
+    {% block body %}
+      <p> This is a placeholder </p>
+    {% endblock body %}
+  </main>
+  <footer class="page-footer font-small bg-dark text-white-50 py-1">
+    {% block footer %}
+    <div class="container-fluid text-center text-md-left">
+      <div class="row">
+        <div class="col-md-6">
+          <small> El proyecto "Gas Monitor" forma parte de el proyecto fin de grado "Incorporación del sensor de fugas de gas al internet of things".</small>
+          <small> Escrito por Manuel Gómez Castro para la Escuela Politécnica Superior de córdoba</small>
+        </div>
+        <small  class="col-md-3"><a href="https://github.com/django/django/blob/master/LICENSE"> Powered by Django </a></small>
+        <small  class="col-md-3"><a href="https://getbootstrap.com/docs/4.0/about/license/"> Styled with Bootstrap </a></small>
+      </div>
+    </div>
+
+    {% endblock footer %}
+  </footer>
+</body>
+</html>
